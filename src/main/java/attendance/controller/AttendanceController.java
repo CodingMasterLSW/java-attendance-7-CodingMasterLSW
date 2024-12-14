@@ -33,6 +33,11 @@ public class AttendanceController {
             return null;
         });
 
+        retryOnInvalidInput(() -> {
+            inputView.inputTime();
+            return null;
+        });
+
     }
 
     private <T> T retryOnInvalidInput(Supplier<T> input) {

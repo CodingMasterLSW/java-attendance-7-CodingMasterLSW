@@ -1,9 +1,13 @@
 package attendance.view;
 
+import static attendance.exception.ErrorMessage.INVALID_FORMAT;
 import static attendance.exception.ErrorMessage.INVALID_INPUT;
 import static attendance.exception.ErrorMessage.NOT_BLANK_INPUT;
 
 import camp.nextstep.edu.missionutils.Console;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class InputView {
 
@@ -41,6 +45,13 @@ public class InputView {
         return userInput();
     }
 
+    public String inputTime() {
+        printMessage(INPUT_ATTENDANCE_TIME_MESSAGE);
+        String userInput = userInput();
+        validateTimeFormat(userInput);
+        return userInput;
+    }
+
     public void printMessage(String message) {
         System.out.println(message);
     }
@@ -57,6 +68,16 @@ public class InputView {
             return;
         }
         throw new IllegalArgumentException(INVALID_INPUT.getMessage());
+    }
+
+    private LocalTime validateTimeFormat(String userInput) {
+        try {
+            LocalTime localTime = LocalTime.parse(userInput);
+            return localTime;
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException(INVALID_FORMAT.getMessage());
+        }
+
     }
 
 }

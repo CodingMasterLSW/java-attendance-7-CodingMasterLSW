@@ -3,6 +3,7 @@ package attendance.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AttendanceRepository {
 
@@ -30,7 +31,10 @@ public class AttendanceRepository {
         return true;
     }
 
-    public List<Attendance> getAttendances() {
-        return Collections.unmodifiableList(attendances);
+    public List<Attendance> getAttendancesByName(String nickName) {
+        return attendances.stream()
+                .filter(attendance -> attendance.getNickName().equals(nickName))
+                .collect(Collectors.toList());
     }
+
 }

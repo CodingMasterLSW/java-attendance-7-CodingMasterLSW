@@ -41,6 +41,10 @@ public class AttendanceService {
         return attendance;
     }
 
+    public List<Attendance> getAttendances(String nickName) {
+        return attendanceRepository.getAttendancesByName(nickName);
+    }
+
     public void validateInputNickName(String nickName) {
         boolean hasNickName = attendanceRepository.hasNickName(nickName);
         if(hasNickName) {

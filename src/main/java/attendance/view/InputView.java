@@ -34,8 +34,8 @@ public class InputView {
     public String inputFunction(LocalDateTime now) {
         printMessage(FUNCTION);
         String userInput = userInput();
+        validateDay(userInput, now);
         validateFunction(userInput);
-        validateDay(now);
         return userInput;
     }
 
@@ -91,7 +91,10 @@ public class InputView {
         }
     }
 
-    private void validateDay(LocalDateTime now) {
+    private void validateDay(String userInput, LocalDateTime now) {
+        if (!userInput.equals("1")) {
+            return;
+        }
         String day = now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREA);
         if (day.equals("토요일") || day.equals("일요일")) {
             throw new IllegalArgumentException(

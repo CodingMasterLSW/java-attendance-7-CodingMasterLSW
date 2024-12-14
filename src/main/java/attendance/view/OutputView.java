@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.TextStyle;
+import java.util.List;
 import java.util.Locale;
 
 public class OutputView {
@@ -33,6 +34,19 @@ public class OutputView {
         System.out.printf(ATTENDANCE_INFO_MESSAGE,
                 date.getMonth().getValue(), date.getDayOfMonth(), day, time, attendance.getStatus());
         printMessage(BLANK);
+    }
+
+    public void printAllAttendanceInfo(List<Attendance> attendances) {
+        for (Attendance attendance : attendances) {
+            LocalDate date = attendance.getDate();
+            LocalTime time = attendance.getTime();
+
+            String day = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREA);
+
+            System.out.printf(ATTENDANCE_INFO_MESSAGE,
+                    date.getMonth().getValue(), date.getDayOfMonth(), day, time, attendance.getStatus());
+            printMessage(BLANK);
+        }
     }
 
     private void printMessage(String message) {

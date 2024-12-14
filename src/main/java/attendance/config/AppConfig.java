@@ -1,6 +1,7 @@
 package attendance.config;
 
 import attendance.controller.AttendanceController;
+import attendance.domain.AttendanceRepository;
 import attendance.service.AttendanceService;
 import attendance.view.InputView;
 import attendance.view.OutputView;
@@ -15,7 +16,7 @@ public class AppConfig {
     }
 
     public static AttendanceService createService() {
-        return new AttendanceService();
+        return new AttendanceService(AttendanceRepository.create());
     }
 
 }

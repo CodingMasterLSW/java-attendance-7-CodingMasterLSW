@@ -20,10 +20,7 @@ public class AttendanceController {
     }
 
     public void start() {
-        List<String> strings = attendanceService.readFile();
-        for (String string : strings) {
-            System.out.println(string);
-        }
+        attendanceService.initAttendance();
 
         String functionChoice = retryOnInvalidInput(() -> {
             inputView.inputFunction();

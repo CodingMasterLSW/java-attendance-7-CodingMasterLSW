@@ -13,6 +13,8 @@ public class InputView {
             "3. 크루별 출석 기록 확인\n" +
             "4. 제적 위험자 확인\n" +
             "Q. 종료";
+    private static final String INPUT_NICKNAME_MESSAGE = "닉네임을 입력해 주세요.";
+    private static final String INPUT_ATTENDANCE_TIME_MESSAGE = "등교 시간을 입력해 주세요.";
 
     private InputView() {
     }
@@ -21,16 +23,22 @@ public class InputView {
         return new InputView();
     }
 
-    public void inputFunction() {
+    public String inputFunction() {
         printMessage(FUNCTION);
-        userInput();
+        String userInput = userInput();
+        validateFunction(userInput);
+        return userInput;
     }
 
     public String userInput() {
         String userInput = Console.readLine();
         validateInput(userInput);
-        validateFunction(userInput);
         return userInput;
+    }
+
+    public String inputNickName() {
+        printMessage(INPUT_NICKNAME_MESSAGE);
+        return userInput();
     }
 
     public void printMessage(String message) {

@@ -18,4 +18,15 @@ public class AttendanceRepository {
         attendances.add(attendance);
     }
 
+    public boolean hasNickName(String nickName) {
+        Attendance hasNickName = attendances.stream()
+                .filter(attendance -> attendance.getNickName().equals(nickName))
+                .findFirst()
+                .orElse(null);
+        if (hasNickName == null) {
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -26,6 +26,13 @@ public class AttendanceController {
             inputView.inputFunction();
             return null;
         });
+
+        retryOnInvalidInput(() -> {
+            String nickName = inputView.inputNickName();
+            attendanceService.validateInputNickName(nickName);
+            return null;
+        });
+
     }
 
     private <T> T retryOnInvalidInput(Supplier<T> input) {

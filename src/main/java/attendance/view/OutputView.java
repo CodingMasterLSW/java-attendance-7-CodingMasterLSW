@@ -2,6 +2,7 @@ package attendance.view;
 
 public class OutputView {
 
+
     private OutputView() {
     }
 

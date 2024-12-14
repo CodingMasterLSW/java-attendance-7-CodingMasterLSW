@@ -2,16 +2,19 @@ package attendance.view;
 
 import static attendance.exception.ErrorMessage.INVALID_FORMAT;
 import static attendance.exception.ErrorMessage.INVALID_INPUT;
+import static attendance.exception.ErrorMessage.NOT_ATTENDANCE_DAY;
 import static attendance.exception.ErrorMessage.NOT_BLANK_INPUT;
 
 import camp.nextstep.edu.missionutils.Console;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 public class InputView {
 
-    private static final String FUNCTION_CHOICE_MESSAGE = "오늘은 %s월 %s일 %s입니다. 기능을 선택해 주세요.";
+    private static final String BLANK = "";
     private static final String FUNCTION = "1. 출석 확인\n" +
             "2. 출석 수정\n" +
             "3. 크루별 출석 기록 확인\n" +
@@ -19,6 +22,7 @@ public class InputView {
             "Q. 종료";
     private static final String INPUT_NICKNAME_MESSAGE = "닉네임을 입력해 주세요.";
     private static final String INPUT_ATTENDANCE_TIME_MESSAGE = "등교 시간을 입력해 주세요.";
+    private static final String DATE_INFO_MESSAGE = "오늘은 %s월 %s일 %s입니다. 기능을 선택해 주세요.";
 
     private InputView() {
     }
@@ -27,10 +31,11 @@ public class InputView {
         return new InputView();
     }
 
-    public String inputFunction() {
+    public String inputFunction(LocalDateTime now) {
         printMessage(FUNCTION);
         String userInput = userInput();
         validateFunction(userInput);
+        validateDay(now);
         return userInput;
     }
 
@@ -50,6 +55,13 @@ public class InputView {
         String userInput = userInput();
         validateTimeFormat(userInput);
         return userInput;
+    }
+
+    public void printDateInfo(LocalDateTime now) {
+        System.out.printf(DATE_INFO_MESSAGE, now.getMonth().getValue(),
+                now.getDayOfMonth(),
+                now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREA));
+        printMessage(BLANK);
     }
 
     public void printMessage(String message) {
@@ -77,7 +89,17 @@ public class InputView {
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException(INVALID_FORMAT.getMessage());
         }
+    }
 
+    private void validateDay(LocalDateTime now) {
+        String day = now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREA);
+        if (day.equals("토요일") || day.equals("일요일")) {
+            throw new IllegalArgumentException(String.valueOf(System.out.printf(
+                    String.valueOf(NOT_ATTENDANCE_DAY.getMessage()),
+                    now.getMonth().getValue(),
+                    now.getDayOfMonth(),
+                    day)));
+        }
     }
 
 }

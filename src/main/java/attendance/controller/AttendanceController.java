@@ -3,7 +3,8 @@ package attendance.controller;
 import attendance.service.AttendanceService;
 import attendance.view.InputView;
 import attendance.view.OutputView;
-import java.util.List;
+import camp.nextstep.edu.missionutils.DateTimes;
+import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
 public class AttendanceController {
@@ -21,9 +22,11 @@ public class AttendanceController {
 
     public void start() {
         attendanceService.initAttendance();
+        LocalDateTime now = DateTimes.now();
+        inputView.printDateInfo(now);
 
         String functionChoice = retryOnInvalidInput(() -> {
-            inputView.inputFunction();
+            inputView.inputFunction(now);
             return null;
         });
 

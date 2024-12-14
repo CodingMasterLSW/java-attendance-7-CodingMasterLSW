@@ -31,7 +31,7 @@ public class OutputView {
         String day = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREA);
 
         System.out.printf(ATTENDANCE_INFO_MESSAGE,
-                date.getMonth(), date.getDayOfMonth(), day, time, attendance.getStatus());
+                date.getMonth().getValue(), date.getDayOfMonth(), day, time, attendance.getStatus());
         printMessage(BLANK);
     }
 

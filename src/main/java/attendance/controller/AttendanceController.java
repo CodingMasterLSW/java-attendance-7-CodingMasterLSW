@@ -28,22 +28,22 @@ public class AttendanceController {
     public void start() {
         attendanceService.initAttendance();
         while (true) {
-            LocalDateTime now = DateTimes.now().minusDays(1);
+            LocalDateTime now = DateTimes.now();
             inputView.printDateInfo(now);
 
             String functionChoice = inputView.inputFunction(now);
             if (functionChoice.equals("Q")) {
                 break;
+            } else {
+                String nickName = inputView.inputNickName();
+                attendanceService.validateInputNickName(nickName);
+
+                LocalTime inputTime = inputView.inputTime();
+                Attendance attendance = attendanceService.createAttendance(nickName, now,
+                        inputTime);
+                outputView.printAttendanceTime(attendance);
             }
-            String nickName = inputView.inputNickName();
-            attendanceService.validateInputNickName(nickName);
-
-            LocalTime inputTime = inputView.inputTime();
-            OperatingTime.validateInputTime(inputTime);
-            Attendance attendance = attendanceService.createAttendance(nickName, now, inputTime);
-            outputView.printAttendanceTime(attendance);
         }
-
     }
 
     private <T> T retryOnInvalidInput(Supplier<T> input) {

@@ -3,6 +3,7 @@ package attendance.controller;
 import attendance.service.AttendanceService;
 import attendance.view.InputView;
 import attendance.view.OutputView;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class AttendanceController {
@@ -19,6 +20,11 @@ public class AttendanceController {
     }
 
     public void start() {
+        List<String> strings = attendanceService.readFile();
+        for (String string : strings) {
+            System.out.println(string);
+        }
+
         String functionChoice = retryOnInvalidInput(() -> {
             inputView.inputFunction();
             return null;

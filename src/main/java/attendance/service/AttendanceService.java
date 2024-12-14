@@ -1,5 +1,7 @@
 package attendance.service;
 
+import static attendance.exception.ErrorMessage.NOT_EXIST_NICKNAME;
+
 import attendance.domain.Attendance;
 import attendance.domain.AttendanceRepository;
 import attendance.utils.FileLoader;
@@ -15,11 +17,23 @@ public class AttendanceService {
 
     public void initAttendance() {
         List<String> loadFiles = FileLoader.loadFile();
-        String nickName = loadFiles.get(0);
-        String date = loadFiles.get(1);
-        String time = loadFiles.get(2);
-        Attendance attendance = Attendance.of(nickName, date, time);
-        attendanceRepository.add(attendance);
+        for (String loadFile : loadFiles) {
+            List<String> crewInfo = List.of(loadFile.split(",| "));
+            String nickName = crewInfo.get(0);
+            String date = crewInfo.get(1);
+            String time = crewInfo.get(2);
+            Attendance attendance = Attendance.of(nickName, date, time);
+            attendanceRepository.add(attendance);
+        }
+
+    }
+
+    public void validateInputNickName(String nickName) {
+        boolean hasNickName = attendanceRepository.hasNickName(nickName);
+        if(hasNickName) {
+            return;
+        }
+        throw new IllegalArgumentException(NOT_EXIST_NICKNAME.getMessage());
     }
 
 }

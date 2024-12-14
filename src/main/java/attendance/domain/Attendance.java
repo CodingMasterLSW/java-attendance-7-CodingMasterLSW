@@ -32,4 +32,8 @@ public class Attendance {
     public LocalTime getTime() {
         return time;
     }
+
+    public Status getStatus() {
+        return status;
+    }
 }

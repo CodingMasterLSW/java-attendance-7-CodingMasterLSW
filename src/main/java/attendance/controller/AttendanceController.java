@@ -1,5 +1,6 @@
 package attendance.controller;
 
+import attendance.domain.Attendance;
 import attendance.domain.Day;
 import attendance.domain.OperatingTime;
 import attendance.domain.Status;
@@ -39,9 +40,8 @@ public class AttendanceController {
 
             LocalTime inputTime = inputView.inputTime();
             OperatingTime.validateInputTime(inputTime);
-            Status status = Day.decideAttendanceStatus(now, inputTime);
-            attendanceService.createAttendance(nickName, now, inputTime);
-            outputView.printAttendanceTime(now, inputTime, status);
+            Attendance attendance = attendanceService.createAttendance(nickName, now, inputTime);
+            outputView.printAttendanceTime(attendance);
         }
 
     }

@@ -34,10 +34,11 @@ public class AttendanceService {
         }
     }
 
-    public void createAttendance(String nickName, LocalDateTime now, LocalTime inputTime) {
+    public Attendance createAttendance(String nickName, LocalDateTime now, LocalTime inputTime) {
         Status status = Day.decideAttendanceStatus(now, inputTime);
         Attendance attendance = Attendance.of(nickName, now.toLocalDate(), inputTime, status);
         attendanceRepository.add(attendance);
+        return attendance;
     }
 
     public void validateInputNickName(String nickName) {

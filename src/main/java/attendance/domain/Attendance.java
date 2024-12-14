@@ -8,15 +8,17 @@ public class Attendance {
     private final String nickName;
     private final LocalDate date;
     private final LocalTime time;
+    private final Status status;
 
-    private Attendance(String nickName, LocalDate date, LocalTime time) {
+    private Attendance(String nickName, LocalDate date, LocalTime time, Status status) {
         this.nickName = nickName;
         this.date = date;
         this.time = time;
+        this.status = status;
     }
 
-    public static Attendance of(String name, LocalDate date, LocalTime time) {
-        return new Attendance(name, date, time);
+    public static Attendance of(String name, LocalDate date, LocalTime time, Status status) {
+        return new Attendance(name, date, time, status);
     }
 
     public String getNickName() {

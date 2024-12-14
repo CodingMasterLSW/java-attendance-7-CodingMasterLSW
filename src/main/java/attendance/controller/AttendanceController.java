@@ -1,6 +1,7 @@
 package attendance.controller;
 
 import attendance.domain.Attendance;
+import attendance.domain.OperatingTime;
 import attendance.service.AttendanceService;
 import attendance.view.InputView;
 import attendance.view.OutputView;
@@ -38,6 +39,7 @@ public class AttendanceController {
 
             if (functionChoice.equals("1")) {
                 LocalTime inputTime = inputView.inputTime();
+                OperatingTime.validateInputTime(inputTime);
                 Attendance attendance = attendanceService.createAttendance(nickName, now,
                         inputTime);
                 outputView.printAttendanceTime(attendance);

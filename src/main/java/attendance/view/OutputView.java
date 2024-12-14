@@ -1,9 +1,7 @@
 package attendance.view;
 
 import attendance.domain.Attendance;
-import attendance.domain.Status;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.TextStyle;
 import java.util.List;
@@ -28,9 +26,7 @@ public class OutputView {
     public void printAttendanceTime(Attendance attendance) {
         LocalDate date = attendance.getDate();
         LocalTime time = attendance.getTime();
-
         String day = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREA);
-
         System.out.printf(ATTENDANCE_INFO_MESSAGE,
                 date.getMonth().getValue(), date.getDayOfMonth(), day, time, attendance.getStatus());
         printMessage(BLANK);
@@ -40,9 +36,7 @@ public class OutputView {
         for (Attendance attendance : attendances) {
             LocalDate date = attendance.getDate();
             LocalTime time = attendance.getTime();
-
             String day = date.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREA);
-
             System.out.printf(ATTENDANCE_INFO_MESSAGE,
                     date.getMonth().getValue(), date.getDayOfMonth(), day, time, attendance.getStatus());
             printMessage(BLANK);

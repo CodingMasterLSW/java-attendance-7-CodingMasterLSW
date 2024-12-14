@@ -45,6 +45,10 @@ public class AttendanceService {
         return attendanceRepository.getAttendancesByName(nickName);
     }
 
+    public void modifyAttendance(String nickName, String date, LocalTime inputTime) {
+        attendanceRepository.modifyAttendance(nickName, date, inputTime);
+    }
+
     public void validateInputNickName(String nickName) {
         boolean hasNickName = attendanceRepository.hasNickName(nickName);
         if(hasNickName) {

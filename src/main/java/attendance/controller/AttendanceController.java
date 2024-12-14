@@ -44,6 +44,10 @@ public class AttendanceController {
                         inputTime);
                 outputView.printAttendanceTime(attendance);
             }
+
+            if (functionChoice.equals("2")) {
+
+            }
             if (functionChoice.equals("3")) {
                 List<Attendance> attendances = attendanceService.getAttendances(nickName);
                 outputView.printAllAttendanceInfo(attendances);

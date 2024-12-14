@@ -1,5 +1,7 @@
 package attendance.domain;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +36,16 @@ public class AttendanceRepository {
         return attendances.stream()
                 .filter(attendance -> attendance.getNickName().equals(nickName))
                 .collect(Collectors.toList());
+    }
+
+    public void modifyAttendance(String nickName, String date, LocalTime inputTime) {
+        LocalDate localDate = LocalDate.parse(date);
+        Attendance findAttendance = attendances.stream()
+                .filter(attendance -> attendance.getNickName().equals(nickName) &&
+                        attendance.getDate().equals(localDate))
+                .findFirst()
+                .orElse(null);
+        findAttendance.modifyTime(inputTime);
     }
 
 }

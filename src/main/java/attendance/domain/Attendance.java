@@ -7,7 +7,7 @@ public class Attendance {
 
     private final String nickName;
     private final LocalDate date;
-    private final LocalTime time;
+    private LocalTime time;
     private final Status status;
 
     private Attendance(String nickName, LocalDate date, LocalTime time, Status status) {
@@ -19,6 +19,10 @@ public class Attendance {
 
     public static Attendance of(String name, LocalDate date, LocalTime time, Status status) {
         return new Attendance(name, date, time, status);
+    }
+
+    public void modifyTime(LocalTime changeTime) {
+        this.time = changeTime;
     }
 
     public String getNickName() {

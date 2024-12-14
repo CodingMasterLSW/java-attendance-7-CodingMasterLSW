@@ -22,25 +22,24 @@ public class AttendanceController {
 
     public void start() {
         attendanceService.initAttendance();
-        LocalDateTime now = DateTimes.now();
-        inputView.printDateInfo(now);
+        while (true) {
+            LocalDateTime now = DateTimes.now().minusDays(1);
+            inputView.printDateInfo(now);
 
-        String functionChoice = retryOnInvalidInput(() -> {
-            inputView.inputFunction(now);
-            return null;
-        });
+            String functionChoice = retryOnInvalidInput(() -> inputView.inputFunction(now));
+            if (functionChoice.equals("Q")) {
+                break;
+            }
 
-        retryOnInvalidInput(() -> {
-            String nickName = inputView.inputNickName();
-            attendanceService.validateInputNickName(nickName);
-            return null;
-        });
+            String nickName = retryOnInvalidInput(() -> {
+                String name = inputView.inputNickName();
+                attendanceService.validateInputNickName(name);
+                return name;
+            });
+            String inputTime = retryOnInvalidInput(() -> inputView.inputTime());
 
-        retryOnInvalidInput(() -> {
-            inputView.inputTime();
-            return null;
-        });
-
+            attendanceService.createAttendance(nickName, inputTime);
+        }
     }
 
     private <T> T retryOnInvalidInput(Supplier<T> input) {

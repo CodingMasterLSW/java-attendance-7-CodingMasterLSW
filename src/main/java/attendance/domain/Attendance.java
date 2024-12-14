@@ -1,18 +1,21 @@
 package attendance.domain;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Attendance {
 
     private final String nickName;
-    private final String date;
-    private final String time;
+    private final LocalDate date;
+    private final LocalTime time;
 
-    private Attendance(String nickName, String date, String time) {
+    private Attendance(String nickName, LocalDate date, LocalTime time) {
         this.nickName = nickName;
         this.date = date;
         this.time = time;
     }
 
-    public static Attendance of(String name, String date, String time) {
+    public static Attendance of(String name, LocalDate date, LocalTime time) {
         return new Attendance(name, date, time);
     }
 
@@ -20,11 +23,11 @@ public class Attendance {
         return nickName;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 }

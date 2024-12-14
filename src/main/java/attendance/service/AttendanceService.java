@@ -5,6 +5,8 @@ import static attendance.exception.ErrorMessage.NOT_EXIST_NICKNAME;
 import attendance.domain.Attendance;
 import attendance.domain.AttendanceRepository;
 import attendance.utils.FileLoader;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class AttendanceService {
@@ -20,12 +22,15 @@ public class AttendanceService {
         for (String loadFile : loadFiles) {
             List<String> crewInfo = List.of(loadFile.split(",| "));
             String nickName = crewInfo.get(0);
-            String date = crewInfo.get(1);
-            String time = crewInfo.get(2);
+            LocalDate date = LocalDate.parse(crewInfo.get(1));
+            LocalTime time = LocalTime.parse(crewInfo.get(2));
             Attendance attendance = Attendance.of(nickName, date, time);
             attendanceRepository.add(attendance);
         }
+    }
 
+    public void createAttendance(String nickName, LocalDate now, LocalDate inputTime) {
+//        Attendance attendance = Attendance.of(nickName, now, inputTime);
     }
 
     public void validateInputNickName(String nickName) {

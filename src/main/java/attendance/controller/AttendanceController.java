@@ -36,6 +36,7 @@ public class AttendanceController {
 
                 LocalTime inputTime = inputView.inputTime();
                 attendanceService.createAttendance(nickName, now, inputTime);
+                outputView.printAttendanceTime(now, inputTime, true);
             }
         }
     }

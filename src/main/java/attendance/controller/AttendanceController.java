@@ -3,6 +3,7 @@ package attendance.controller;
 import attendance.service.AttendanceService;
 import attendance.view.InputView;
 import attendance.view.OutputView;
+import java.util.function.Supplier;
 
 public class AttendanceController {
 
@@ -18,6 +19,19 @@ public class AttendanceController {
     }
 
     public void start() {
+        String functionChoice = retryOnInvalidInput(() -> {
+            inputView.inputFunction();
+            return null;
+        });
+    }
 
+    private <T> T retryOnInvalidInput(Supplier<T> input) {
+        while (true) {
+            try {
+                return input.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 }

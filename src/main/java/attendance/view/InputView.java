@@ -1,10 +1,18 @@
 package attendance.view;
 
+import static attendance.exception.ErrorMessage.INVALID_INPUT;
 import static attendance.exception.ErrorMessage.NOT_BLANK_INPUT;
 
 import camp.nextstep.edu.missionutils.Console;
 
 public class InputView {
+
+    private static final String FUNCTION_CHOICE_MESSAGE = "오늘은 %s월 %s일 %s입니다. 기능을 선택해 주세요.";
+    private static final String FUNCTION = "1. 출석 확인\n" +
+            "2. 출석 수정\n" +
+            "3. 크루별 출석 기록 확인\n" +
+            "4. 제적 위험자 확인\n" +
+            "Q. 종료";
 
     private InputView() {
     }
@@ -13,9 +21,15 @@ public class InputView {
         return new InputView();
     }
 
+    public void inputFunction() {
+        printMessage(FUNCTION);
+        userInput();
+    }
+
     public String userInput() {
         String userInput = Console.readLine();
         validateInput(userInput);
+        validateFunction(userInput);
         return userInput;
     }
 
@@ -27,6 +41,14 @@ public class InputView {
         if (userInput.isBlank() || userInput == null) {
             throw new IllegalArgumentException(NOT_BLANK_INPUT.getMessage());
         }
+    }
+
+    private void validateFunction(String userInput) {
+        if (userInput.equals("1") || userInput.equals("2") || userInput.equals("3")
+                || userInput.equals("4") || userInput.equals("Q")) {
+            return;
+        }
+        throw new IllegalArgumentException(INVALID_INPUT.getMessage());
     }
 
 }

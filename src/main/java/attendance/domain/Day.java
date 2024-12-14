@@ -51,16 +51,4 @@ public enum Day {
                 .orElse(null);
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
 }

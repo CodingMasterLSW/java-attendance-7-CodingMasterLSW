@@ -22,11 +22,4 @@ public enum OperatingTime {
         throw new IllegalArgumentException(NOT_OPERATING_TIME.getMessage());
     }
 
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
 }

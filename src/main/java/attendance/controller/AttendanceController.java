@@ -66,14 +66,4 @@ public class AttendanceController {
         outputView.printAttendanceTime(attendance);
     }
 
-    private <T> T retryOnInvalidInput(Supplier<T> input) {
-        while (true) {
-            try {
-                return input.get();
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e.getMessage());
-            }
-        }
-    }
-
 }

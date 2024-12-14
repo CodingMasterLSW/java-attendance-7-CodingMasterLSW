@@ -19,10 +19,6 @@ public class OutputView {
         return new OutputView();
     }
 
-    public void printErrorMessage(String message) {
-        printMessage(message);
-    }
-
     public void printAttendanceTime(Attendance attendance) {
         LocalDate date = attendance.getDate();
         LocalTime time = attendance.getTime();

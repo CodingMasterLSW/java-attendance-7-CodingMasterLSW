@@ -26,33 +26,44 @@ public class AttendanceController {
 
     public void start() {
         attendanceService.initAttendance();
-
         while (true) {
             LocalDateTime now = DateTimes.now();
             inputView.printDateInfo(now);
             String functionChoice = inputView.inputFunction(now);
-            if (functionChoice.equals("Q")) {
+            if (handleProcess(functionChoice, now)) {
                 break;
             }
-            String nickName = inputView.inputNickName();
-            attendanceService.validateInputNickName(nickName);
-
-            if (functionChoice.equals("1")) {
-                LocalTime inputTime = inputView.inputTime();
-                OperatingTime.validateInputTime(inputTime);
-                Attendance attendance = attendanceService.createAttendance(nickName, now,
-                        inputTime);
-                outputView.printAttendanceTime(attendance);
-            }
-
-            if (functionChoice.equals("2")) {
-
-            }
-            if (functionChoice.equals("3")) {
-                List<Attendance> attendances = attendanceService.getAttendances(nickName);
-                outputView.printAllAttendanceInfo(attendances);
-            }
         }
+    }
+
+    private boolean handleProcess(String functionChoice, LocalDateTime now) {
+        if (functionChoice.equals("Q")) {
+            return true;
+        }
+        String nickName = inputView.inputNickName();
+        attendanceService.validateInputNickName(nickName);
+        if (functionChoice.equals("1")) {
+            handleCheckAttendance(nickName, now);
+        }
+        if (functionChoice.equals("2")) {
+        }
+        if (functionChoice.equals("3")) {
+            handleModifyAttendance(nickName);
+        }
+        return false;
+    }
+
+    private void handleModifyAttendance(String nickName) {
+        List<Attendance> attendances = attendanceService.getAttendances(nickName);
+        outputView.printAllAttendanceInfo(attendances);
+    }
+
+    private void handleCheckAttendance(String nickName, LocalDateTime now) {
+        LocalTime inputTime = inputView.inputTime();
+        OperatingTime.validateInputTime(inputTime);
+        Attendance attendance = attendanceService.createAttendance(nickName, now,
+                inputTime);
+        outputView.printAttendanceTime(attendance);
     }
 
     private <T> T retryOnInvalidInput(Supplier<T> input) {

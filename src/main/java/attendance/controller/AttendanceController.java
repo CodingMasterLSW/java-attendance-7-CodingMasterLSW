@@ -5,6 +5,7 @@ import attendance.view.InputView;
 import attendance.view.OutputView;
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.function.Supplier;
 
 public class AttendanceController {
@@ -23,22 +24,19 @@ public class AttendanceController {
     public void start() {
         attendanceService.initAttendance();
         while (true) {
-            LocalDateTime now = DateTimes.now().minusDays(1);
+            LocalDateTime now = DateTimes.now();
             inputView.printDateInfo(now);
 
-            String functionChoice = retryOnInvalidInput(() -> inputView.inputFunction(now));
+            String functionChoice = inputView.inputFunction(now);
             if (functionChoice.equals("Q")) {
                 break;
+            } else {
+                String nickName = inputView.inputNickName();
+                attendanceService.validateInputNickName(nickName);
+
+                LocalTime inputTime = inputView.inputTime();
+                attendanceService.createAttendance(nickName, now, inputTime);
             }
-
-            String nickName = retryOnInvalidInput(() -> {
-                String name = inputView.inputNickName();
-                attendanceService.validateInputNickName(name);
-                return name;
-            });
-            String inputTime = retryOnInvalidInput(() -> inputView.inputTime());
-
-            attendanceService.createAttendance(nickName, inputTime);
         }
     }
 

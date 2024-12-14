@@ -50,11 +50,11 @@ public class InputView {
         return userInput();
     }
 
-    public String inputTime() {
+    public LocalTime inputTime() {
         printMessage(INPUT_ATTENDANCE_TIME_MESSAGE);
         String userInput = userInput();
-        validateTimeFormat(userInput);
-        return userInput;
+        LocalTime localTime = validateTimeFormat(userInput);
+        return localTime;
     }
 
     public void printDateInfo(LocalDateTime now) {
@@ -94,12 +94,14 @@ public class InputView {
     private void validateDay(LocalDateTime now) {
         String day = now.getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.KOREA);
         if (day.equals("토요일") || day.equals("일요일")) {
-            throw new IllegalArgumentException(String.valueOf(System.out.printf(
-                    String.valueOf(NOT_ATTENDANCE_DAY.getMessage()),
-                    now.getMonth().getValue(),
-                    now.getDayOfMonth(),
-                    day)));
+            throw new IllegalArgumentException(
+                    String.format(
+                            NOT_ATTENDANCE_DAY.getMessage(),
+                            now.getMonth().getValue(),
+                            now.getDayOfMonth(),
+                            day
+                    )
+            );
         }
     }
-
 }

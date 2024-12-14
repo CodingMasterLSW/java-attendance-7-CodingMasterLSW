@@ -6,6 +6,7 @@ import attendance.domain.Attendance;
 import attendance.domain.AttendanceRepository;
 import attendance.utils.FileLoader;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -29,8 +30,9 @@ public class AttendanceService {
         }
     }
 
-    public void createAttendance(String nickName, LocalDate now, LocalDate inputTime) {
-//        Attendance attendance = Attendance.of(nickName, now, inputTime);
+    public void createAttendance(String nickName, LocalDateTime now, LocalTime inputTime) {
+        Attendance attendance = Attendance.of(nickName, now.toLocalDate(), inputTime);
+        attendanceRepository.add(attendance);
     }
 
     public void validateInputNickName(String nickName) {
